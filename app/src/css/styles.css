@@ -1,0 +1,72 @@
+/*
+black - #4B4B54
+blueish - #59617b
+white - #fafafc
+purple - #696996
+lightgrey - #d7d7dd
+darkgrey- #9e9aa0
+tapina - #82b4b7
+greenish - #2dc0bd
+lightblue - #97e5dd
+ */
+
+html {
+  font-family: sans-serif;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  position: relative;
+  font: normal 300 14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #4B4B54;
+  letter-spacing: 0.05em;
+}
+
+p {
+  margin: 0;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.sidebar {
+  height: 100%;
+  width: 300px;
+  position: relative;
+  display: inline-block;
+  background-color: #EEEEEE;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* CHAT ROOM LIST ITEMS */
+
+.room-item {
+  padding: 20px 15px;
+}
+
+.room-item:hover {
+  background-color: #DDDDDD;
+}
+
+.room-title, .room-time {
+  display: inline-block;
+}
+
+.room-time {
+  float: right;
+}
+
+
+
