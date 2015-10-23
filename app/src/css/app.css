@@ -1,0 +1,143 @@
+/*
+black - #4B4B54
+blueish - #59617b
+white - #fafafc
+purple - #696996
+lightgrey - #d7d7dd
+darkgrey- #9e9aa0
+tapina - #82b4b7
+greenish - #2dc0bd
+lightblue - #97e5dd
+ */
+
+html {
+  font-family: sans-serif;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  position: relative;
+  font: normal 300 14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #4B4B54;
+  letter-spacing: 0.05em;
+}
+
+p {
+  margin: 0;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* CHAT ROOM LIST */
+
+.sidebar {
+  height: 100%;
+  position: relative;
+  display: inline-block;
+  background-color: #EEEEEE;
+}
+
+.sidebar-header {
+  text-align: center;
+  font-weight: 200;
+  font-variant: small-caps;
+}
+
+.sidebar-left {
+  float: left;
+  width: 22%;
+}
+
+.sidebar-right {
+  float: right;
+  width: 20%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* CHAT ROOM LIST ITEMS */
+
+.room-item {
+  padding: 20px 15px;
+  border-top: solid 1px #E4E4E5;
+}
+
+.room-item:last-child {
+  border-bottom: solid 1px #E4E4E5;
+}
+
+.room-item:hover {
+  background-color: #DDDDDD;
+}
+
+.room-title {
+  margin-bottom: .5em;
+}
+
+.room-title, .room-time {
+  display: inline-block;
+}
+
+.room-time, .room-participants {
+  font-size: 12px;
+  color: #AAAAAE;
+}
+
+.room-time {
+  float: right;
+}
+
+/* CHAT WINDOW */
+.chat-window {
+  position: relative;
+  height: 100%;
+  width: 58%;
+  display: inline-block;
+}
+
+.submit-message {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  bottom: 0;
+  padding: 10px;
+  background-color: #97e5dd;
+}
+
+.submit-message input, .submit-message button {
+  font-size: 16px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.submit-message input {
+  width: 80%;
+  border: none;
+  padding: 10px;
+  display: inline-block;
+}
+
+.submit-message button {
+  width: 14%;
+  background-color: #696996;
+  color: #fafafc;
+  padding: 10px;
+  border: none;
+  font-variant: small-caps;
+}
+
+.submit-message button:hover {
+  background-color: #6969B6;
+}

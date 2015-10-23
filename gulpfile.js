@@ -3,6 +3,7 @@ var connect    = require('gulp-connect');
 var open       = require("gulp-open");
 var browserify = require('gulp-browserify');
 var concat     = require('gulp-concat');
+var sass       = require('gulp-sass');
 var port       = process.env.port || 3000;
 
 gulp.task('browserify', function() {
@@ -44,13 +45,21 @@ gulp.task('html', function () {
     .pipe(connect.reload());
 });
 
+gulp.task('styles', function() {
+  gulp.src('./app/src/sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./app/src/css/'))
+    .pipe(connect.reload());
+})
+
 // watch files for live reload
 gulp.task('watch', function() {
     gulp.watch('app/dist/js/*.js', ['js']);
     gulp.watch('app/index.html', ['html']);
+    gulp.watch('app/src/sass/**/*.scss', ['styles']);
     gulp.watch('app/src/js/**/*.js', ['browserify']);
 });
 
 gulp.task('default', ['browserify']);
 
-gulp.task('serve', ['browserify', 'connect', 'watch']);  // took out 'open'
+gulp.task('serve', ['browserify', 'connect', 'watch', 'styles']);  // took out 'open'
