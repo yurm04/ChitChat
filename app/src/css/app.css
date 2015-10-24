@@ -71,16 +71,16 @@ ul {
 
 /* CHAT ROOM LIST ITEMS */
 
-.room-item {
+.sidebar-item {
   padding: 20px 15px;
   border-top: solid 1px #E4E4E5;
 }
 
-.room-item:last-child {
+.sidebar-item:last-child {
   border-bottom: solid 1px #E4E4E5;
 }
 
-.room-item:hover {
+.sidebar-item:hover {
   background-color: #DDDDDD;
 }
 
@@ -92,7 +92,7 @@ ul {
   display: inline-block;
 }
 
-.room-time, .room-participants {
+.room-time, .room-participants, .sent-from, .sent-time {
   font-size: 12px;
   color: #AAAAAE;
 }
@@ -143,4 +143,12 @@ ul {
 
 .submit-message button:hover {
   background-color: #6969B6;
+}
+
+.message {
+  background-color: #fafafc;
+}
+
+.sent-from {
+  margin-right: 50px;
 }
