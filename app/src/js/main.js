@@ -1,16 +1,9 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var Hello = React.createClass({
-
-  render: function() {
-    return (
-      <h2>HELLLLOOOOOOO</h2>      
-    );
-  }
-});
+var ChatApp = require('./components/ChatApp');
 
 React.render(
-  <Hello />,
+  <ChatApp />,
   document.getElementById('app')
 )

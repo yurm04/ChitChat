@@ -56,8 +56,8 @@ gulp.task('styles', function() {
 gulp.task('watch', function() {
     gulp.watch('app/dist/js/*.js', ['js']);
     gulp.watch('app/index.html', ['html']);
-    gulp.watch('app/src/sass/**/*.scss', ['styles']);
     gulp.watch('app/src/js/**/*.js', ['browserify']);
+    gulp.watch('app/src/sass/**/*.scss', ['styles']);
 });
 
 gulp.task('default', ['browserify']);

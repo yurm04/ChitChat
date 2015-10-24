@@ -15,12 +15,15 @@ A simple chat app.
 ```html
 <ChitChat>
   <RoomList>
-    <ChatRoom>
+    <RoomItem />
   </RoomList>
   <ChatWindow>
     <MessageList>
       <Message />
     </MessageList>
   </ChatWindow>
+  <UserList>
+    <UserItem />
+  <UserList />
 </ChitChat>
 ```
