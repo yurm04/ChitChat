@@ -10,16 +10,16 @@ var ChatApp = React.createClass({
   getInitialState: function() {
     // dummy chat data for now
     var CHAT_ROOMS = [
-        { roomName: 'rickandmortyfor100years.com', numParticipants: 4 lastMessageTime: '10:23 AM', 
+        { id: 1, roomName: 'rickandmorty100years.com', numParticipants: 4, lastMessageTime: '10:23 AM', 
             messages: [
-                { username: 'yurm', messageTime: '10:15PM', messageText: "What's up buddy?" },
-                { username: 'rick', messageTime: '10:17PM', messageText: "Wubalubadubdub!" },
-                { username: 'morty', messageTime: '10:20PM', messageText: "aaaaaahhhhhhhhhhhhhh" }
+                { id: 1, username: 'yurm', messageTime: '10:15PM', messageText: "What's up buddy?" },
+                { id: 2, username: 'rick', messageTime: '10:17PM', messageText: "Wubalubadubdub!" },
+                { id: 3, username: 'morty', messageTime: '10:20PM', messageText: "aaaaaahhhhhhhhhhhhhh" }
             ],
-            users: ['yurm04', 'rick', 'morty'];
+            users: [{ id: 1, username: 'yurm04' }, { id: 2, username: 'rick' }, { id: 3, username: 'morty' }]
         },
-        { roomName: "What's for lunch?", numParticipants: 2 lastMessageTime: '1:23 PM' },
-        { roomName: "Help I'm Alive", numParticipants: 4 lastMessageTime: '1 min ago' }
+        { id: 2, roomName: "What's for lunch?", numParticipants: 2, lastMessageTime: '1:23 PM' },
+        { id: 3, roomName: "Help I'm Alive", numParticipants: 4, lastMessageTime: '1 min ago' }
     ];
 
     return {
@@ -27,13 +27,15 @@ var ChatApp = React.createClass({
       activeRoom: CHAT_ROOMS[0],
       currentUsers: CHAT_ROOMS[0].users
     }
-  }
+  },
 
   render: function() {
     return (
-        <RoomList rooms={this.state.chatRooms} />
-        <ChatWindow activeRoom={this.state.activeRoom} />
-        <UserList users={this.state.currentUsers} />
+        <div className="container">
+            <RoomList rooms={this.state.chatRooms} />
+            <ChatWindow activeRoom={this.state.activeRoom} />
+            <UserList users={this.state.currentUsers} />
+        </div>
     );
   }
 });

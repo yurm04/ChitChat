@@ -7,7 +7,7 @@ var UserList = React.createClass({
   
   render: function() {
     var users = this.props.users.map( function(user) {
-        <UserItem username={user} />
+        return <UserItem key={user.id} username={user.username} />;
     })
 
     return (

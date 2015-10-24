@@ -7,7 +7,7 @@ var RoomList = React.createClass({
   
   render: function() {
     var chatRooms = this.props.rooms.map( function(roomData) {
-        return <RoomItem roomName={roomData.roomName} numParticipants={roomData.numParticipants} lastMessageTime={roomData.lastMessageTime} />;
+        return <RoomItem key={roomData.id} roomName={roomData.roomName} numParticipants={roomData.numParticipants} lastMessageTime={roomData.lastMessageTime} />;
     });
 
     return (

@@ -27,6 +27,11 @@ body {
   letter-spacing: 0.05em;
 }
 
+.container {
+  position: relative;
+  height: 100%;
+}
+
 p {
   margin: 0;
 }

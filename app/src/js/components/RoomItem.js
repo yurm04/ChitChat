@@ -10,7 +10,7 @@ var RoomItem = React.createClass({
         <li className="sidebar-item">
             <p className="room-title">{this.props.roomName}</p>
             <p className="room-time">{this.props.lastMessageTime}</p>
-            <p className="room-participants">{this.props.numParticipants}</p>
+            <p className="room-participants">{this.props.numParticipants} active users</p>
         </li>
     );
   }
