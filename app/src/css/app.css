@@ -43,7 +43,7 @@ p {
   height: 100%;
   position: relative;
   display: inline-block;
-  background-color: #EEEEEE;
+  background-color: #fafafc;
 }
 
 .sidebar-header {
@@ -55,11 +55,13 @@ p {
 .sidebar-left {
   float: left;
   width: 22%;
+  border-right: solid 1px #E4E4E5;
 }
 
 .sidebar-right {
   float: right;
   width: 20%;
+  border-left: solid 1px #E4E4E5;
 }
 
 ul {
@@ -103,8 +105,9 @@ ul {
 .chat-window {
   position: relative;
   height: 100%;
-  width: 58%;
+  width: 57.79%;
   display: inline-block;
+  background-color: #EEEEEE;
 }
 
 .submit-message {
