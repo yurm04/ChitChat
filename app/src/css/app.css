@@ -69,6 +69,10 @@ p {
   border-left: solid 1px #E4E4E5;
 }
 
+.active-item {
+  border-right: solid 3px #97E5DD;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -85,7 +89,7 @@ ul {
   border-bottom: solid 1px #E4E4E5;
 }
 
-.sidebar-item:hover {
+.room-item:hover {
   background-color: #DDDDDD;
 }
 
@@ -112,7 +116,7 @@ ul {
   height: 100%;
   width: 57.79%;
   display: inline-block;
-  background-color: #EEEEEE;
+  background-color: #D2D4DA;
 }
 
 .submit-message {
@@ -124,20 +128,20 @@ ul {
   background-color: #97e5dd;
 }
 
-.submit-message input, .submit-message button {
+.submit-message .input-message, .submit-message .input-button {
   font-size: 16px;
   border-radius: 2px;
   vertical-align: middle;
 }
 
-.submit-message input {
+.submit-message .input-message {
   width: 80%;
   border: none;
   padding: 10px;
   display: inline-block;
 }
 
-.submit-message button {
+.submit-message .input-button {
   width: 14%;
   background-color: #696996;
   color: #fafafc;
@@ -146,7 +150,7 @@ ul {
   font-variant: small-caps;
 }
 
-.submit-message button:hover {
+.submit-message .input-button:hover {
   background-color: #6969B6;
 }
 

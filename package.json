@@ -9,7 +9,8 @@
   "author": "Yuraima Estevez",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
