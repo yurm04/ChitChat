@@ -14,9 +14,16 @@ var UserList   = require('./UserList');
 var ChatApp = React.createClass({displayName: "ChatApp",
 
     componentDidMount: function() {
+        this.io = io;
         io.on('user:connected', function(msg) {
-            console.log(msg);
+            io.emit('message sent', {message : "here's a message"});
         })
+
+        io.on('testing', function(data) {
+            console.log(data);
+        });
+        
+        io.emit('')
     },
 
     getInitialState: function() {
@@ -83,7 +90,7 @@ var ChatApp = React.createClass({displayName: "ChatApp",
         room.messages.push(newMessage);
         chatRoomsUpdate.splice(index, 1, room);
         this.setState({ chatRooms: chatRoomsUpdate });
-        socket.emit('messageAdded', messageData);
+        console.log(io);
     },
     
     updateUsername: function(name) {
@@ -203,6 +210,7 @@ var MessageForm = React.createClass({displayName: "MessageForm",
                            onChange: this.handleMessageInput, 
                            placeholder: "say it don't spray it..."}
                     ), 
+                    
                     React.createElement("input", {className: "input-button", type: "submit", value: "submit"})
                 )
             )

@@ -38,6 +38,7 @@ var MessageForm = React.createClass({
                            onChange={this.handleMessageInput}
                            placeholder="say it don't spray it..."
                     />
+                    
                     <input className="input-button" type="submit" value="submit" />
                 </div>
             </form>

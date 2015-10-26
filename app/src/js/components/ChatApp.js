@@ -13,9 +13,16 @@ var UserList   = require('./UserList');
 var ChatApp = React.createClass({
 
     componentDidMount: function() {
+        this.io = io;
         io.on('user:connected', function(msg) {
-            console.log(msg);
+            io.emit('message sent', {message : "here's a message"});
         })
+
+        io.on('testing', function(data) {
+            console.log(data);
+        });
+        
+        io.emit('')
     },
 
     getInitialState: function() {
@@ -82,7 +89,7 @@ var ChatApp = React.createClass({
         room.messages.push(newMessage);
         chatRoomsUpdate.splice(index, 1, room);
         this.setState({ chatRooms: chatRoomsUpdate });
-        socket.emit('messageAdded', messageData);
+        console.log(io);
     },
     
     updateUsername: function(name) {

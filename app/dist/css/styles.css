@@ -92,7 +92,8 @@ ul {
   border-left: solid 1px #E4E4E5; }
 
 .active-item {
-  border-right: solid 3px #97e5dd; }
+  border-right: solid 3px #97e5dd;
+  background-color: rgba(151, 229, 221, 0.1); }
 
 /* CHAT ROOM LIST ITEMS */
 .sidebar-item {
@@ -137,11 +138,14 @@ ul {
   border-radius: 3px; }
 
 .submit-message {
-  position: absolute;
-  width: 100%;
+  position: fixed;
+  width: 70%;
   height: 40px;
+  border-top: solid 1px #C3C5CA;
   bottom: 0;
-  background-color: #97e5dd; }
+  padding: 20px;
+  background-color: #D2D4DA;
+  box-shadow: 3px 1px 5px #858996; }
 
 .submit-message .input-message, .submit-message .input-button {
   font-size: 16px;
@@ -149,15 +153,22 @@ ul {
   vertical-align: middle; }
 
 .submit-message .input-message {
-  width: 80%;
-  border: none; }
+  width: 75%;
+  border: none;
+  padding: 12px; }
+  .submit-message .input-message:focus {
+    outline: none;
+    box-shadow: 0 0 5px #97e5dd; }
 
 .submit-message .input-button {
   width: 14%;
+  float: right;
   background-color: #696996;
   color: #fafafc;
   border: none;
-  font-variant: small-caps; }
+  font-variant: small-caps;
+  line-height: 36px;
+  margin-right: 6%; }
 
 .submit-message .input-button:hover {
   background-color: #6969B6; }
