@@ -11,7 +11,9 @@ var ChatWindow = React.createClass({
     return (
         <div className="chat-window">
             <MessageList messages={this.props.activeRoom.messages} />
-            <MessageForm roomId={this.props.activeRoom.id} sendMessage={this.props.sendMessage} />
+            <MessageForm roomId={this.props.activeRoom.id} 
+                         sendMessage={this.props.sendMessage}
+            />
         </div>
     );
   }

@@ -1,0 +1,63 @@
+/* CHAT ROOM LIST */
+
+.sidebar {
+  // height: 100%;
+  position: relative;
+  // display: inline-block;
+  background-color: $white;
+}
+
+.sidebar-header {
+  text-align: center;
+  font-weight: 200;
+  font-variant: small-caps;
+}
+
+.sidebar-left {
+  float: left;
+  width: 30%;
+  border-right: solid 1px $border;
+}
+
+.sidebar-right {
+  float: right;
+  width: 20%;
+  border-left: solid 1px $border;
+}
+
+.active-item {
+  border-right: solid 3px $light-blue;
+}
+
+/* CHAT ROOM LIST ITEMS */
+
+.sidebar-item {
+  padding: 20px 15px;
+  border-top: solid 1px $border;
+  &:last-child {
+    border-bottom: solid 1px $border;
+  }
+}
+
+.room-item {
+  &:hover {
+    background-color: $hover-grey;
+  }
+}
+
+.room-title {
+  margin-bottom: .5em;
+}
+
+.room-title, .room-time {
+  // display: inline-block;
+}
+
+.room-time, .room-participants, .sent-from, .sent-time {
+  font-size: 12px;
+  color: $light-text;
+}
+
+.room-time {
+  float: right;
+}

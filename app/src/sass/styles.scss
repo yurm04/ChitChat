@@ -1,3 +1,5 @@
-body {
-  background-color: red;
-}
+@import 'variables';
+@import 'base';
+@import 'header';
+@import 'sidebar';
+@import 'chat-window';
