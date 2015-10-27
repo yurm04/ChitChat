@@ -2,7 +2,6 @@
 
 var React = require('react');
 
-
 var RoomItem = React.createClass({
     
     getInitialState: function() {
@@ -25,7 +24,7 @@ var RoomItem = React.createClass({
             <li className={this.props.activeId === this.props.roomId ? active : notActive} onClick={this.handleSwitchRoom}>
                 <p className="room-title">{this.props.roomName}</p>
                 <p className="room-time">{this.props.lastMessageTime}</p>
-                <p className="room-participants">{this.props.numParticipants} active users</p>
+                <div className="room-participants">{this.props.numParticipants}</div>
             </li>
         );
     }

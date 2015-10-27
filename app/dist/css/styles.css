@@ -71,6 +71,12 @@ ul {
   padding: 0;
   margin: 0; }
 
+img.emoji {
+  height: 1em;
+  width: 1em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em; }
+
 /* CHAT ROOM LIST */
 .sidebar {
   position: relative;
@@ -106,17 +112,25 @@ ul {
   background-color: #DDDDDD; }
 
 .room-title {
-  margin-bottom: .5em; }
+  margin-bottom: .5em;
+  font-weight: 400; }
 
 .room-time, .room-participants, .sent-from, .sent-time {
   font-size: 12px;
   color: #AAAAAE; }
 
+.room-participants {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 150px;
+  height: 22px; }
+
 .room-time {
   float: right; }
 
 /* CHAT WINDOW */
-.chat-window {
+#chat-window {
   position: relative;
   width: 70%;
   float: left;
@@ -145,7 +159,7 @@ ul {
   bottom: 0;
   padding: 20px;
   background-color: #D2D4DA;
-  box-shadow: 3px 1px 5px #858996; }
+  box-shadow: 3px 1px 5px rgba(133, 137, 150, 0.29); }
 
 .submit-message .input-message, .submit-message .input-button {
   font-size: 16px;
@@ -155,13 +169,14 @@ ul {
 .submit-message .input-message {
   width: 75%;
   border: none;
-  padding: 12px; }
+  padding: 12px;
+  margin-right: 12px; }
   .submit-message .input-message:focus {
     outline: none;
     box-shadow: 0 0 5px #97e5dd; }
 
 .submit-message .input-button {
-  width: 14%;
+  width: 10%;
   float: right;
   background-color: #696996;
   color: #fafafc;
@@ -177,4 +192,27 @@ ul {
   background-color: #fafafc; }
 
 .sent-from {
-  margin-right: 50px; }
+  margin-right: 20px;
+  font-weight: 400; }
+
+.emoji-container {
+  background-color: #fafafc;
+  position: fixed;
+  bottom: 0;
+  height: 80px;
+  overflow-y: scroll;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 3px;
+  box-shadow: 3px 1px 5px rgba(133, 137, 150, 0.29);
+  webkit-transition: height .3s;
+  transition: height .3s; }
+  .emoji-container.show {
+    height: 160px; }
+
+.emoji-item {
+  webkit-transition: height .3s;
+  transition: height .3s;
+  padding: 5px; }
+  .emoji-item:hover {
+    font-size: 25px; }

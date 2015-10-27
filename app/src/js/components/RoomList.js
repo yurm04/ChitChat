@@ -14,11 +14,11 @@ var RoomList = React.createClass({
                              roomId={roomData.id}
                              activeId={this.props.activeRoomId}
                              roomName={roomData.roomName}
-                             numParticipants={roomData.numParticipants}
-                             lastMessageTime={roomData.lastMessageTime}
+                             numParticipants={roomData.lastMessage ? roomData.lastMessage.messageText : ''}
+                             lastMessageTime={roomData.lastMessage ? roomData.lastMessage.messageTime : ''}
                              switchRoom={this.props.switchRoom}
                     />;
-        }, this);
+            }, this);
     }
 
     return (

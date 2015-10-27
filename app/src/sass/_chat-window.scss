@@ -1,5 +1,5 @@
 /* CHAT WINDOW */
-.chat-window {
+#chat-window {
   position: relative;
   // height: 100%;
   width: 70%;
@@ -35,7 +35,7 @@
   bottom: 0;
   padding: 20px;
   background-color: $chat-grey;
-  box-shadow: 3px 1px 5px $shadow;
+  box-shadow: 3px 1px 5px rgba(133, 137, 150, 0.29);
 }
 
 .submit-message .input-message, .submit-message .input-button {
@@ -49,6 +49,7 @@
   border: none;
   padding: 12px;
   // display: inline-block;
+  margin-right: 12px;
   &:focus {
     outline: none;
     box-shadow: 0 0 5px $light-blue
@@ -56,7 +57,7 @@
 }
 
 .submit-message .input-button {
-  width: 14%;
+  width: 10%;
   float: right;
   background-color: #696996;
   color: #fafafc;
@@ -76,5 +77,32 @@
 }
 
 .sent-from {
-  margin-right: 50px;
+  margin-right: 20px;
+  font-weight: 400;
+}
+
+.emoji-container {
+  background-color: $white;
+  position: fixed;
+  bottom: 0;
+  height: 80px;
+  overflow-y: scroll;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 3px;
+  box-shadow: 3px 1px 5px rgba(133, 137, 150, 0.29);
+  webkit-transition: height .3s;
+  transition: height .3s;
+  &.show {
+    height: 160px;
+  }
+}
+
+.emoji-item {
+  webkit-transition: height .3s;
+  transition: height .3s;
+  padding: 5px;
+  &:hover {
+    font-size: 25px;
+  }
 }

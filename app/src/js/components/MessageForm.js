@@ -33,9 +33,9 @@ var MessageForm = React.createClass({
                            type="text"
                            value={this.state.messageInput}
                            onChange={this.handleMessageInput}
-                           placeholder="say it don't spray it..."
+                           ref="inputMessage"
                     />
-                    
+                    <div className="twa twa-2x twa-smile" onClick={this.props.showEmojis ? this.props.hideContainer : this.props.showContainer}></div>
                     <input className="input-button" type="submit" value="submit" />
                 </div>
             </form>

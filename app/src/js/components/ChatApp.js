@@ -17,7 +17,7 @@ var ChatApp = React.createClass({
         return {
             chatRooms: [],
             activeRoom: {},
-            username: 'Yuraima',
+            username: 'ChangeUsername',
             userId: ''
         }
     },
@@ -40,6 +40,14 @@ var ChatApp = React.createClass({
         });
     },
 
+    parseEmojis: function() {
+        return this.refs.chatWindow;
+    },
+
+    generateId: function() {
+        return '_' + Math.random().toString(36).substr(2, 9);
+    },
+
     updateActiveRoom: function(roomId) {
         var updated = _.find(this.state.chatRooms, { id : roomId });
         this.setState({ activeRoom : updated });
@@ -47,7 +55,6 @@ var ChatApp = React.createClass({
 
     // refactor this logic out to a controller
     addNewMessage: function(messageData) {
-        console.log(messageData);
         var newMessage = {
             username: messageData.username,
             messageText: messageData.messageText,
@@ -63,10 +70,12 @@ var ChatApp = React.createClass({
         maxMessage = _.max(room.messages, function(mId) {
             return mId.id;
         })
-        newMessage.id = parseInt(maxMessage.id) + 1;
+        // newMessage.id = parseInt(maxMessage.id) + 1;
+        newMessage.id = this.generateId();
 
         // add message to room, then update chatRooms state
         room.messages.push(newMessage);
+        room.lastMessage = newMessage.id;
         chatRoomsUpdate.splice(index, 1, room);
         this.setState({ chatRooms: chatRoomsUpdate });
     },
