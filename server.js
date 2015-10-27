@@ -14,7 +14,6 @@ io.on('connection', function(socket){
 
     // on user connect, send back list of dummy chat rooms
     socket.on('user:connected', function(data) {
-        console.log(socket.id);
         chat.getChatRooms().forEach(function(room) {
             // join "rooms" using room IDs
             socket.join(room.id);

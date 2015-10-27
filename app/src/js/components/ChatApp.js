@@ -5,7 +5,8 @@ var moment     = require('moment');
 var socket     = require('socket.io-client')();
 var _          = require('lodash');
 
-var Settings   = require('./Settings');
+// var App        = require('./AppController');
+var Username   = require('./Username');
 var RoomList   = require('./RoomList');
 var ChatWindow = require('./ChatWindow');
 var UserList   = require('./UserList');
@@ -17,7 +18,7 @@ var ChatApp = React.createClass({
         return {
             chatRooms: [],
             activeRoom: {},
-            username: 'ChangeUsername',
+            username: 'ChangeUser',
             userId: ''
         }
     },
@@ -70,7 +71,7 @@ var ChatApp = React.createClass({
         maxMessage = _.max(room.messages, function(mId) {
             return mId.id;
         })
-        // newMessage.id = parseInt(maxMessage.id) + 1;
+
         newMessage.id = this.generateId();
 
         // add message to room, then update chatRooms state
@@ -80,6 +81,7 @@ var ChatApp = React.createClass({
         this.setState({ chatRooms: chatRoomsUpdate });
     },
     
+    
     updateUsername: function(name) {
         this.setState({ username : name});
     },
@@ -88,7 +90,7 @@ var ChatApp = React.createClass({
         return (
             <div className="container">
                 <div className="header">
-                    <Settings username={this.state.username}
+                    <Username username={this.state.username}
                               updateUsername={this.updateUsername}
                     />
                 </div>

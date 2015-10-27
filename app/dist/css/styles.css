@@ -74,7 +74,7 @@ ul {
 img.emoji {
   height: 1em;
   width: 1em;
-  margin: 0 .05em 0 .1em;
+  margin: 0 0.05em 0 0.1em;
   vertical-align: -0.1em; }
 
 /* CHAT ROOM LIST */
@@ -205,14 +205,14 @@ img.emoji {
   margin: 0 auto;
   border-radius: 3px;
   box-shadow: 3px 1px 5px rgba(133, 137, 150, 0.29);
-  webkit-transition: height .3s;
-  transition: height .3s; }
+  webkit-transition: height 0.3s;
+  transition: height 0.3s; }
   .emoji-container.show {
     height: 160px; }
 
 .emoji-item {
-  webkit-transition: height .3s;
-  transition: height .3s;
+  webkit-transition: height 0.3s;
+  transition: height 0.3s;
   padding: 5px; }
   .emoji-item:hover {
     font-size: 25px; }

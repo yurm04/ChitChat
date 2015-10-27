@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Settings = React.createClass({
+var Username = React.createClass({
 
     getInitialState: function() {
         return {
@@ -42,4 +42,4 @@ var Settings = React.createClass({
     }
 });
 
-module.exports = Settings;
+module.exports = Username;
