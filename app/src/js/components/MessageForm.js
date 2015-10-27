@@ -1,7 +1,8 @@
 /** @jsx React.DOM */
 
-var React = require('react');
-var moment = require('moment') ;
+var React  = require('react');
+var moment = require('moment');
+var socket = require('socket.io-client')();
 
 var MessageForm = React.createClass({
 
@@ -19,13 +20,9 @@ var MessageForm = React.createClass({
         e.preventDefault();
         this.setState({messageInput: ''});
 
-        var messageData = { roomId: this.props.roomId, messageText: this.state.messageInput, sentTime: moment() }
-
-        this.props.sendMessage(messageData);
-    },
-
-    sendMessage: function() {
-
+        var messageData = { roomId: this.props.roomId, username: this.props.username, messageText: this.state.messageInput, sentTime: moment().format('h:mmA') }
+        socket.emit('newMessage', messageData);
+        // this.props.sendMessage(messageData);
     },
 
     render: function() {

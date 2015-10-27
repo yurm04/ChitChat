@@ -15,52 +15,29 @@ var UserList   = require('./UserList');
 var ChatApp = React.createClass({displayName: "ChatApp",
 
     getInitialState: function() {
-        // dummy chat data for now
-        var CHAT_ROOMS = [
-            { id: 1, roomName: 'rickandmorty100years.com', numParticipants: 4, lastMessageTime: '10:23 AM', 
-                messages: [
-                    { id: 1, username: 'yurm', messageTime: '10:15PM', messageText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ab modi inventore possimus voluptate vitae maxime optio distinctio reprehenderit impedit veritatis harum, earum quidem enim quibusdam cumque adipisci, deleniti natus tenetur. Nisi odit repudiandae pariatur eveniet nulla unde, eaque veniam molestiae reprehenderit adipisci, doloremque ducimus, ut quia. Est, sapiente, consectetur." },
-                    { id: 2, username: 'rick', messageTime: '10:17PM', messageText: "Wubalubadubdub!" },
-                    { id: 3, username: 'morty', messageTime: '10:20PM', messageText: "aaaaaahhhhhhhhhhhhhh" }
-                ],
-                users: [{ id: 1, username: 'yurm04' }, { id: 2, username: 'rick' }, { id: 3, username: 'morty' }]
-                },
-            { id: 2, roomName: "What's for lunch?", numParticipants: 2, lastMessageTime: '1:23 PM',
-                messages: [
-                    { id: 1, username: 'grumps', messageTime: '10:15PM', messageText: "hey there" },
-                    { id: 2, username: 'someguy', messageTime: '10:17PM', messageText: "hi there" }
-                ],
-                users: [{ id: 4, username: 'grumps' }, { id: 5, username: 'someguy' }] 
-            },
-            { id: 3, roomName: "Help I'm Alive", numParticipants: 1, lastMessageTime: '1 min ago',
-                messages: [
-                    { id: 1, username: 'biscuit', messageTime: '10:15PM', messageText: "feed me" },
-                    { id: 2, username: 'biscuit', messageTime: '10:16PM', messageText: "right meow" }
-                ],
-                users: [{ id: 6, username: 'biscuit' }] 
-            }
-        ];
-
         return {
             chatRooms: [],
             activeRoom: {},
             username: 'Yuraima',
-            userId: '1'
+            userId: ''
         }
     },
 
     componentDidMount: function() {
-        socket.emit('user:connected', {message: 'hello server'});
-
+        // once initial render complete, emit init event and set data
+        socket.emit('user:connected');
         socket.on('user:init', this.initData);
 
+        // handler for new messages sent from server
+        socket.on('addMessage', this.addNewMessage);
     },
 
+    // set chat room data from websocket
     initData: function(data) {
-        console.log(data);
         this.setState({
-            chatRooms: data,
-            activeRoom: data[0]
+            chatRooms: data.rooms,
+            activeRoom: data.rooms[0],
+            userId: data.userId
         });
     },
 
@@ -71,11 +48,11 @@ var ChatApp = React.createClass({displayName: "ChatApp",
 
     // refactor this logic out to a controller
     addNewMessage: function(messageData) {
-        io.emit('chat message', 'hello');
+        console.log(messageData);
         var newMessage = {
-            username: this.state.username,
+            username: messageData.username,
             messageText: messageData.messageText,
-            messageTime: messageData.sentTime.format('h:mmA')
+            messageTime: messageData.sentTime
         };
         var chatRoomsUpdate = this.state.chatRooms;
         
@@ -93,7 +70,6 @@ var ChatApp = React.createClass({displayName: "ChatApp",
         room.messages.push(newMessage);
         chatRoomsUpdate.splice(index, 1, room);
         this.setState({ chatRooms: chatRoomsUpdate });
-        console.log(io);
     },
     
     updateUsername: function(name) {
@@ -114,6 +90,7 @@ var ChatApp = React.createClass({displayName: "ChatApp",
                           switchRoom: this.updateActiveRoom}
                     ), 
                     React.createElement(ChatWindow, {activeRoom: this.state.activeRoom, 
+                                username: this.state.username, 
                                 sendMessage: this.addNewMessage}
                     )
                 )
@@ -139,6 +116,7 @@ var ChatWindow = React.createClass({displayName: "ChatWindow",
         React.createElement("div", {className: "chat-window"}, 
             React.createElement(MessageList, {messages: this.props.activeRoom.messages}), 
             React.createElement(MessageForm, {roomId: this.props.activeRoom.id, 
+                         username: this.props.username, 
                          sendMessage: this.props.sendMessage}
             )
         )
@@ -175,8 +153,9 @@ module.exports = Message;
 },{"react":170}],4:[function(require,module,exports){
 /** @jsx React.DOM */
 
-var React = require('react');
-var moment = require('moment') ;
+var React  = require('react');
+var moment = require('moment');
+var socket = require('socket.io-client')();
 
 var MessageForm = React.createClass({displayName: "MessageForm",
 
@@ -194,13 +173,9 @@ var MessageForm = React.createClass({displayName: "MessageForm",
         e.preventDefault();
         this.setState({messageInput: ''});
 
-        var messageData = { roomId: this.props.roomId, messageText: this.state.messageInput, sentTime: moment() }
-
-        this.props.sendMessage(messageData);
-    },
-
-    sendMessage: function() {
-
+        var messageData = { roomId: this.props.roomId, username: this.props.username, messageText: this.state.messageInput, sentTime: moment().format('h:mmA') }
+        socket.emit('newMessage', messageData);
+        // this.props.sendMessage(messageData);
     },
 
     render: function() {
@@ -223,7 +198,7 @@ var MessageForm = React.createClass({displayName: "MessageForm",
 
 module.exports = MessageForm;
 
-},{"moment":14,"react":170}],5:[function(require,module,exports){
+},{"moment":14,"react":170,"socket.io-client":171}],5:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -234,7 +209,7 @@ var MessageList = React.createClass({displayName: "MessageList",
   render: function() {
     // render Messages component if messages exist
     var messages;
-    if (this.props.message !== undefined) {
+    if (this.props.messages !== undefined) {
         messages = this.props.messages.map( function(messageData) {
             return React.createElement(Message, {key: messageData.id, username: messageData.username, messageTime: messageData.messageTime, messageText: messageData.messageText});
         });
