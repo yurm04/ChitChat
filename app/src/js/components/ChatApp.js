@@ -2,6 +2,7 @@
 
 var React      = require('react');
 var moment     = require('moment');
+var socket     = require('socket.io-client')();
 var _          = require('lodash');
 
 var Settings   = require('./Settings');
@@ -11,19 +12,6 @@ var UserList   = require('./UserList');
 
 
 var ChatApp = React.createClass({
-
-    componentDidMount: function() {
-        this.io = io;
-        io.on('user:connected', function(msg) {
-            io.emit('message sent', {message : "here's a message"});
-        })
-
-        io.on('testing', function(data) {
-            console.log(data);
-        });
-        
-        io.emit('')
-    },
 
     getInitialState: function() {
         // dummy chat data for now
@@ -53,11 +41,26 @@ var ChatApp = React.createClass({
         ];
 
         return {
-            chatRooms: CHAT_ROOMS,
-            activeRoom: CHAT_ROOMS[0],
+            chatRooms: [],
+            activeRoom: {},
             username: 'Yuraima',
             userId: '1'
         }
+    },
+
+    componentDidMount: function() {
+        socket.emit('user:connected', {message: 'hello server'});
+
+        socket.on('user:init', this.initData);
+
+    },
+
+    initData: function(data) {
+        console.log(data);
+        this.setState({
+            chatRooms: data,
+            activeRoom: data[0]
+        });
     },
 
     updateActiveRoom: function(roomId) {

@@ -6,9 +6,14 @@ var Message = require('./Message');
 var MessageList = React.createClass({
   
   render: function() {
-    var messages = this.props.messages.map( function(messageData) {
-        return <Message key={messageData.id} username={messageData.username} messageTime={messageData.messageTime} messageText={messageData.messageText} />;
-    })
+    // render Messages component if messages exist
+    var messages;
+    if (this.props.message !== undefined) {
+        messages = this.props.messages.map( function(messageData) {
+            return <Message key={messageData.id} username={messageData.username} messageTime={messageData.messageTime} messageText={messageData.messageText} />;
+        });
+    }
+
     return (
         <div className="message-list">
             {messages}

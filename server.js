@@ -36,13 +36,9 @@ app.use('/', express.static(__dirname + '/app'));
 // server events
 io.on('connection', function(socket){
 
-    console.log('user connected');
+    socket.on('user:connected', function(data) {
+        console.log(data);
+        io.emit('user:init', CHAT_ROOMS);
+    });
 
-    io.emit('user:connected', { message: 'connected!'});
-
-    io.emit('testing', { message: 'testing' });
-
-    io.on('message sent', function(msg) {
-      console.log(msg);
-    })
 })
