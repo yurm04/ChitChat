@@ -1,37 +1,59 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-module.exports.newMessage = function(messageData, rooms) {
-
-    console.log('new message');
-    var newMessage = {
-        username: messageData.username,
-        messageText: messageData.messageText,
-        messageTime: messageData.sentTime
-    };
-
-    // get room and index from chatRooms
-    var room = _.find(rooms, { id: messageData.roomId });
-    var index = _.indexOf(rooms, room);
-
-    // get max messageId and increment for new message
-    maxMessage = _.max(room.messages, function(mId) {
-        return mId.id;
-    });
-
-    newMessage.id = ID();
-
-    // add message to room, then update chatRooms state
-    room.messages.push(newMessage);
-    room.lastMessage = newMessage.id;
-    rooms.splice(index, 1, room);
-    
-    return rooms;
-}
+var _ = require('lodash');
 
 var ID = function () {
     return '_' + Math.random().toString(36).substr(2, 9);
 };
 
-},{}],2:[function(require,module,exports){
+module.exports.addNewMessage = function(messageData, chatRoomsUpdate) {
+    var newMessage = {
+        username: messageData.username,
+        messageText: messageData.messageText,
+        messageTime: messageData.sentTime
+    };
+    
+    // get room and index from chatRooms
+    var room = _.find(chatRoomsUpdate, { id: messageData.roomId });
+    var index = _.indexOf(chatRoomsUpdate, room);
+    
+    // get max messageId and increment for new message
+    maxMessage = _.max(room.messages, function(mId) {
+        return mId.id;
+    })
+
+    newMessage.id = ID();
+    console.log(newMessage);
+
+    // add message to room, then update chatRooms state
+    room.messages.push(newMessage);
+    room.lastMessage = newMessage.id;
+    chatRoomsUpdate.splice(index, 1, room);
+    
+    return chatRoomsUpdate;
+}
+
+module.exports.emojiCodes = function() {
+    return ["smile", "laughing", "blush", "smiley", 
+            "relaxed", "smirk", "heart-eyes", "kissing-heart", 
+            "kissing-closed-eyes", "flushed", "relieved", "satisfied", 
+            "grin", "wink", "stuck-out-tongue-winking-eye", "stuck-out-tongue-closed-eyes", 
+            "grinning", "kissing", "kissing-smiling-eyes", "stuck-out-tongue", 
+            "sleeping", "worried", "frowning", "anguished", 
+            "open-mouth", "grimacing", "confused", "hushed", 
+            "expressionless", "unamused", "sweat-smile", "sweat", 
+            "weary", "pensive", "disappointed", "confounded", "fearful", 
+            "cold-sweat", "persevere", "cry", "sob", 
+            "joy", "astonished", "scream", "tired-face", 
+            "angry", "rage", "triumph", "sleepy", 
+            "yum", "mask", "sunglasses", "dizzy-face", 
+            "imp", "smiling-imp", "neutral-face", "no-mouth", "innocent"];
+}
+
+module.exports.ID = ID;
+
+
+
+},{"lodash":15}],2:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React      = require('react');
@@ -39,7 +61,7 @@ var moment     = require('moment');
 var socket     = require('socket.io-client')();
 var _          = require('lodash');
 
-// var App        = require('./AppController');
+var App        = require('../App');
 var Username   = require('./Username');
 var RoomList   = require('./RoomList');
 var ChatWindow = require('./ChatWindow');
@@ -79,42 +101,15 @@ var ChatApp = React.createClass({displayName: "ChatApp",
         return this.refs.chatWindow;
     },
 
-    generateId: function() {
-        return '_' + Math.random().toString(36).substr(2, 9);
-    },
-
     updateActiveRoom: function(roomId) {
         var updated = _.find(this.state.chatRooms, { id : roomId });
         this.setState({ activeRoom : updated });
     },
 
-    // refactor this logic out to a controller
     addNewMessage: function(messageData) {
-        var newMessage = {
-            username: messageData.username,
-            messageText: messageData.messageText,
-            messageTime: messageData.sentTime
-        };
-        var chatRoomsUpdate = this.state.chatRooms;
-        
-        // get room and index from chatRooms
-        var room = _.find(chatRoomsUpdate, { id: messageData.roomId });
-        var index = _.indexOf(chatRoomsUpdate, room);
-        
-        // get max messageId and increment for new message
-        maxMessage = _.max(room.messages, function(mId) {
-            return mId.id;
-        })
-
-        newMessage.id = this.generateId();
-
-        // add message to room, then update chatRooms state
-        room.messages.push(newMessage);
-        room.lastMessage = newMessage.id;
-        chatRoomsUpdate.splice(index, 1, room);
-        this.setState({ chatRooms: chatRoomsUpdate });
+        var updatedRooms = App.addNewMessage(messageData, this.state.chatRooms);
+        this.setState({ chatRooms: updatedRooms });
     },
-    
     
     updateUsername: function(name) {
         this.setState({ username : name});
@@ -145,7 +140,7 @@ var ChatApp = React.createClass({displayName: "ChatApp",
 
 module.exports = ChatApp;
 
-},{"./ChatWindow":3,"./RoomList":9,"./UserList":11,"./Username":12,"lodash":15,"moment":16,"react":172,"socket.io-client":173}],3:[function(require,module,exports){
+},{"../App":1,"./ChatWindow":3,"./RoomList":9,"./UserList":11,"./Username":12,"lodash":15,"moment":16,"react":172,"socket.io-client":173}],3:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -194,8 +189,7 @@ module.exports = ChatWindow;
 /** @jsx React.DOM */
 
 var React = require('react');
-var App   = require('./AppController');
-var codes = ["smile", "laughing", "blush", "smiley", "relaxed", "smirk", "heart-eyes", "kissing-heart", "kissing-closed-eyes", "flushed", "relieved", "satisfied", "grin", "wink", "stuck-out-tongue-winking-eye", "stuck-out-tongue-closed-eyes", "grinning", "kissing", "kissing-smiling-eyes", "stuck-out-tongue", "sleeping", "worried", "frowning", "anguished", "open-mouth", "grimacing", "confused", "hushed", "expressionless", "unamused", "sweat-smile", "sweat", "weary", "pensive", "disappointed", "confounded", "fearful", "cold-sweat", "persevere", "cry", "sob", "joy", "astonished", "scream", "tired-face", "angry", "rage", "triumph", "sleepy", "yum", "mask", "sunglasses", "dizzy-face", "imp", "smiling-imp", "neutral-face", "no-mouth", "innocent",];
+var App   = require('../App');
 
 var EmojiPicker = React.createClass({displayName: "EmojiPicker",
 
@@ -204,6 +198,8 @@ var EmojiPicker = React.createClass({displayName: "EmojiPicker",
     },
 
     render: function() {
+        var codes = App.emojiCodes();
+        console.log(codes);
         var count = 0;
         var emojiClass = '';
         var emojis = codes.map(function(code) {
@@ -222,7 +218,7 @@ var EmojiPicker = React.createClass({displayName: "EmojiPicker",
 
 module.exports = EmojiPicker;
 
-},{"./AppController":1,"react":172}],5:[function(require,module,exports){
+},{"../App":1,"react":172}],5:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');

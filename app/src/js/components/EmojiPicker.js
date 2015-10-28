@@ -1,8 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var App   = require('./AppController');
-var codes = ["smile", "laughing", "blush", "smiley", "relaxed", "smirk", "heart-eyes", "kissing-heart", "kissing-closed-eyes", "flushed", "relieved", "satisfied", "grin", "wink", "stuck-out-tongue-winking-eye", "stuck-out-tongue-closed-eyes", "grinning", "kissing", "kissing-smiling-eyes", "stuck-out-tongue", "sleeping", "worried", "frowning", "anguished", "open-mouth", "grimacing", "confused", "hushed", "expressionless", "unamused", "sweat-smile", "sweat", "weary", "pensive", "disappointed", "confounded", "fearful", "cold-sweat", "persevere", "cry", "sob", "joy", "astonished", "scream", "tired-face", "angry", "rage", "triumph", "sleepy", "yum", "mask", "sunglasses", "dizzy-face", "imp", "smiling-imp", "neutral-face", "no-mouth", "innocent",];
+var App   = require('../App');
 
 var EmojiPicker = React.createClass({
 
@@ -11,6 +10,8 @@ var EmojiPicker = React.createClass({
     },
 
     render: function() {
+        var codes = App.emojiCodes();
+        console.log(codes);
         var count = 0;
         var emojiClass = '';
         var emojis = codes.map(function(code) {

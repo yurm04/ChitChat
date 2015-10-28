@@ -5,7 +5,7 @@ var moment     = require('moment');
 var socket     = require('socket.io-client')();
 var _          = require('lodash');
 
-// var App        = require('./AppController');
+var App        = require('../App');
 var Username   = require('./Username');
 var RoomList   = require('./RoomList');
 var ChatWindow = require('./ChatWindow');
@@ -45,42 +45,15 @@ var ChatApp = React.createClass({
         return this.refs.chatWindow;
     },
 
-    generateId: function() {
-        return '_' + Math.random().toString(36).substr(2, 9);
-    },
-
     updateActiveRoom: function(roomId) {
         var updated = _.find(this.state.chatRooms, { id : roomId });
         this.setState({ activeRoom : updated });
     },
 
-    // refactor this logic out to a controller
     addNewMessage: function(messageData) {
-        var newMessage = {
-            username: messageData.username,
-            messageText: messageData.messageText,
-            messageTime: messageData.sentTime
-        };
-        var chatRoomsUpdate = this.state.chatRooms;
-        
-        // get room and index from chatRooms
-        var room = _.find(chatRoomsUpdate, { id: messageData.roomId });
-        var index = _.indexOf(chatRoomsUpdate, room);
-        
-        // get max messageId and increment for new message
-        maxMessage = _.max(room.messages, function(mId) {
-            return mId.id;
-        })
-
-        newMessage.id = this.generateId();
-
-        // add message to room, then update chatRooms state
-        room.messages.push(newMessage);
-        room.lastMessage = newMessage.id;
-        chatRoomsUpdate.splice(index, 1, room);
-        this.setState({ chatRooms: chatRoomsUpdate });
+        var updatedRooms = App.addNewMessage(messageData, this.state.chatRooms);
+        this.setState({ chatRooms: updatedRooms });
     },
-    
     
     updateUsername: function(name) {
         this.setState({ username : name});
