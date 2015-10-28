@@ -14,27 +14,6 @@ gulp.task('browserify', function() {
       .pipe(gulp.dest('./app/dist/js'));
 });
 
-// launch browser in a port
-/*
-gulp.task('open', function(){
-  var options = {
-    url: 'http://127.0.0.1:3000/',
-    app: 'google chrome'
-  };
-  gulp.src('./app/index.html')
-  .pipe(open('', options));
-});
-*/
-
-// live reload server
-// gulp.task('connect', function() {
-//   livereloadserver({
-//     root: 'app',
-//     port: port,
-//     livereload: true
-//   });
-// });
-
 // start server with nodemon
 gulp.task('nodemon', function() {
   // listen for changes
@@ -80,6 +59,6 @@ gulp.task('watch', function() {
     gulp.watch('app/src/sass/**/*.scss', ['styles']);
 });
 
-gulp.task('default', ['nodemon', 'browserify']);
+gulp.task('default', ['browserify']);
 
-gulp.task('serve', ['nodemon','browserify', 'watch', 'styles']);  // took out 'open', 'connect'
+gulp.task('server', ['nodemon','browserify', 'watch', 'styles']);  // took out 'open', 'connect'

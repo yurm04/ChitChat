@@ -1,3 +1,5 @@
+/* App.js - Controller for React components */
+
 var _ = require('lodash');
 
 var ID = function () {

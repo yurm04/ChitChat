@@ -41,10 +41,6 @@ var ChatApp = React.createClass({
         });
     },
 
-    parseEmojis: function() {
-        return this.refs.chatWindow;
-    },
-
     updateActiveRoom: function(roomId) {
         var updated = _.find(this.state.chatRooms, { id : roomId });
         this.setState({ activeRoom : updated });
