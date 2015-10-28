@@ -20,7 +20,7 @@ var MessageForm = React.createClass({
         e.preventDefault();
         this.setState({messageInput: ''});
 
-        var messageData = { roomId: this.props.roomId, username: this.props.username, messageText: this.state.messageInput, sentTime: moment().format('h:mmA') }
+        var messageData = { roomId: this.props.roomId, username: this.props.username, messageText: this.state.messageInput, messageTime: moment().format('h:mmA') }
         socket.emit('newMessage', messageData);
         // this.props.sendMessage(messageData);
     },

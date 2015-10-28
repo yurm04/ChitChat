@@ -11,7 +11,6 @@ var EmojiPicker = React.createClass({
 
     render: function() {
         var codes = App.emojiCodes();
-        console.log(codes);
         var count = 0;
         var emojiClass = '';
         var emojis = codes.map(function(code) {

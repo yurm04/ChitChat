@@ -10,7 +10,7 @@ module.exports.addNewMessage = function(messageData, chatRoomsUpdate) {
     var newMessage = {
         username: messageData.username,
         messageText: messageData.messageText,
-        messageTime: messageData.sentTime
+        messageTime: messageData.messageTime
     };
     
     // get room and index from chatRooms
@@ -23,13 +23,11 @@ module.exports.addNewMessage = function(messageData, chatRoomsUpdate) {
     })
 
     newMessage.id = ID();
-    console.log(newMessage);
 
     // add message to room, then update chatRooms state
     room.messages.push(newMessage);
-    room.lastMessage = newMessage.id;
+    room.lastMessage = newMessage;
     chatRoomsUpdate.splice(index, 1, room);
-    
     return chatRoomsUpdate;
 }
 

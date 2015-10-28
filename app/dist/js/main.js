@@ -11,7 +11,7 @@ module.exports.addNewMessage = function(messageData, chatRoomsUpdate) {
     var newMessage = {
         username: messageData.username,
         messageText: messageData.messageText,
-        messageTime: messageData.sentTime
+        messageTime: messageData.messageTime
     };
     
     // get room and index from chatRooms
@@ -24,13 +24,11 @@ module.exports.addNewMessage = function(messageData, chatRoomsUpdate) {
     })
 
     newMessage.id = ID();
-    console.log(newMessage);
 
     // add message to room, then update chatRooms state
     room.messages.push(newMessage);
-    room.lastMessage = newMessage.id;
+    room.lastMessage = newMessage;
     chatRoomsUpdate.splice(index, 1, room);
-    
     return chatRoomsUpdate;
 }
 
@@ -197,7 +195,6 @@ var EmojiPicker = React.createClass({displayName: "EmojiPicker",
 
     render: function() {
         var codes = App.emojiCodes();
-        console.log(codes);
         var count = 0;
         var emojiClass = '';
         var emojis = codes.map(function(code) {
@@ -263,7 +260,7 @@ var MessageForm = React.createClass({displayName: "MessageForm",
         e.preventDefault();
         this.setState({messageInput: ''});
 
-        var messageData = { roomId: this.props.roomId, username: this.props.username, messageText: this.state.messageInput, sentTime: moment().format('h:mmA') }
+        var messageData = { roomId: this.props.roomId, username: this.props.username, messageText: this.state.messageInput, messageTime: moment().format('h:mmA') }
         socket.emit('newMessage', messageData);
         // this.props.sendMessage(messageData);
     },
@@ -329,7 +326,6 @@ var RoomItem = React.createClass({displayName: "RoomItem",
     },
 
     handleSwitchRoom: function() {
-
         this.props.switchRoom(this.props.roomId);
     },
 
@@ -337,12 +333,12 @@ var RoomItem = React.createClass({displayName: "RoomItem",
         // class name for active item
         var active = 'sidebar-item room-item active-item';
         var notActive = 'sidebar-item room-item';
-        
+        console.log(this.props.lastMessage);
         return (
             React.createElement("li", {className: this.props.activeId === this.props.roomId ? active : notActive, onClick: this.handleSwitchRoom}, 
                 React.createElement("p", {className: "room-title"}, this.props.roomName), 
-                React.createElement("p", {className: "room-time"}, this.props.lastMessageTime), 
-                React.createElement("div", {className: "room-participants"}, this.props.numParticipants)
+                React.createElement("p", {className: "room-time"}, this.props.lastMessage.messageTime), 
+                React.createElement("div", {className: "room-participants"}, this.props.lastMessage.messageText)
             )
         );
     }
@@ -367,8 +363,7 @@ var RoomList = React.createClass({displayName: "RoomList",
                              roomId: roomData.id, 
                              activeId: this.props.activeRoomId, 
                              roomName: roomData.roomName, 
-                             numParticipants: roomData.lastMessage ? roomData.lastMessage.messageText : '', 
-                             lastMessageTime: roomData.lastMessage ? roomData.lastMessage.messageTime : '', 
+                             lastMessage: roomData.lastMessage, 
                              switchRoom: this.props.switchRoom}
                     );
             }, this);

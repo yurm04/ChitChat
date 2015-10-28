@@ -14,8 +14,7 @@ var RoomList = React.createClass({
                              roomId={roomData.id}
                              activeId={this.props.activeRoomId}
                              roomName={roomData.roomName}
-                             numParticipants={roomData.lastMessage ? roomData.lastMessage.messageText : ''}
-                             lastMessageTime={roomData.lastMessage ? roomData.lastMessage.messageTime : ''}
+                             lastMessage={roomData.lastMessage}
                              switchRoom={this.props.switchRoom}
                     />;
             }, this);
