@@ -13,6 +13,7 @@ var RoomList = React.createClass({
             return <RoomItem key={roomData.id}
                              roomId={roomData.id}
                              activeId={this.props.activeRoomId}
+                             alertCount={roomData.alertCount}
                              roomName={roomData.roomName}
                              lastMessage={roomData.lastMessage}
                              switchRoom={this.props.switchRoom}

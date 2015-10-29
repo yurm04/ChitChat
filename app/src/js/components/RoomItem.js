@@ -16,13 +16,23 @@ var RoomItem = React.createClass({
 
     render: function() {
         // class name for active item
-        var active = 'sidebar-item room-item active-item';
-        var notActive = 'sidebar-item room-item';
+        var itemActive = this.props.activeId === this.props.roomId
+                            ? 'sidebar-item room-item active-item'
+                            : 'sidebar-item room-item';
+        var alertBubble = this.props.alertCount > 0
+                            ? 'alert-bubble show'
+                            : 'alert-bubble';
+        
         return (
-            <li className={this.props.activeId === this.props.roomId ? active : notActive} onClick={this.handleSwitchRoom}>
-                <p className="room-title">{this.props.roomName}</p>
-                <p className="room-time">{this.props.lastMessage.messageTime}</p>
-                <div className="room-participants">{this.props.lastMessage.messageText}</div>
+            <li className={itemActive} onClick={this.handleSwitchRoom}>
+                <div className="row">
+                    <p className="room-title">{this.props.roomName}</p>
+                    <p className={alertBubble}>{this.props.alertCount}</p>
+                </div>
+                <div className="row">
+                    <p className="room-time">{this.props.lastMessage.messageTime}</p>
+                    <div className="room-participants">{this.props.lastMessage.messageText}</div>
+                </div>
             </li>
         );
     }

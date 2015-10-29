@@ -43,11 +43,15 @@ var ChatApp = React.createClass({
 
     updateActiveRoom: function(roomId) {
         var updated = _.find(this.state.chatRooms, { id : roomId });
+        // set alertCount to 0 if active rooms
+        // updated.activeRoom.alertCount = 0;
+        updated.alertCount = 0;
         this.setState({ activeRoom : updated });
     },
 
     addNewMessage: function(messageData) {
-        var updatedRooms = App.addNewMessage(messageData, this.state.chatRooms);
+        var updatedRooms = App.addNewMessage(messageData, this.state.chatRooms, this.state.activeRoom.id);
+        console.log(updatedRooms);
         this.setState({ chatRooms: updatedRooms });
     },
     

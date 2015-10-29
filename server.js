@@ -18,12 +18,12 @@ io.on('connection', function(socket){
             // join "rooms" using room IDs
             socket.join(room.id);
         });
-        io.emit('user:init', { rooms: chat.getChatRooms(),  userId: chat.generateId() });
+        io.to(socket.id).emit('user:init', { rooms: chat.getChatRooms(),  userId: chat.generateId() });
     });
 
     // when new message sent, add it
     socket.on('newMessage', function(messageData) {
         io.sockets.in(messageData.roomId).emit('addMessage', messageData);
-    })
+    });
 
-})
+});

@@ -7,8 +7,9 @@ var ID = function () {
     return '_' + Math.random().toString(36).substr(2, 9);
 };
 
-module.exports.addNewMessage = function(messageData, chatRoomsUpdate) {
+module.exports.addNewMessage = function(messageData, chatRoomsUpdate, activeRoomId) {
     var newMessage = {
+        id: ID(),
         username: messageData.username,
         messageText: messageData.messageText,
         messageTime: messageData.messageTime
@@ -18,12 +19,9 @@ module.exports.addNewMessage = function(messageData, chatRoomsUpdate) {
     var room = _.find(chatRoomsUpdate, { id: messageData.roomId });
     var index = _.indexOf(chatRoomsUpdate, room);
     
-    // get max messageId and increment for new message
-    maxMessage = _.max(room.messages, function(mId) {
-        return mId.id;
-    })
-
-    newMessage.id = ID();
+    if (activeRoomId !== room.id) {
+        room.alertCount++;
+    };
 
     // add message to room, then update chatRooms state
     room.messages.push(newMessage);
@@ -99,11 +97,15 @@ var ChatApp = React.createClass({displayName: "ChatApp",
 
     updateActiveRoom: function(roomId) {
         var updated = _.find(this.state.chatRooms, { id : roomId });
+        // set alertCount to 0 if active rooms
+        // updated.activeRoom.alertCount = 0;
+        updated.alertCount = 0;
         this.setState({ activeRoom : updated });
     },
 
     addNewMessage: function(messageData) {
-        var updatedRooms = App.addNewMessage(messageData, this.state.chatRooms);
+        var updatedRooms = App.addNewMessage(messageData, this.state.chatRooms, this.state.activeRoom.id);
+        console.log(updatedRooms);
         this.setState({ chatRooms: updatedRooms });
     },
     
@@ -331,14 +333,23 @@ var RoomItem = React.createClass({displayName: "RoomItem",
 
     render: function() {
         // class name for active item
-        var active = 'sidebar-item room-item active-item';
-        var notActive = 'sidebar-item room-item';
-        console.log(this.props.lastMessage);
+        var itemActive = this.props.activeId === this.props.roomId
+                            ? 'sidebar-item room-item active-item'
+                            : 'sidebar-item room-item';
+        var alertBubble = this.props.alertCount > 0
+                            ? 'alert-bubble show'
+                            : 'alert-bubble';
+        
         return (
-            React.createElement("li", {className: this.props.activeId === this.props.roomId ? active : notActive, onClick: this.handleSwitchRoom}, 
-                React.createElement("p", {className: "room-title"}, this.props.roomName), 
-                React.createElement("p", {className: "room-time"}, this.props.lastMessage.messageTime), 
-                React.createElement("div", {className: "room-participants"}, this.props.lastMessage.messageText)
+            React.createElement("li", {className: itemActive, onClick: this.handleSwitchRoom}, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("p", {className: "room-title"}, this.props.roomName), 
+                    React.createElement("p", {className: alertBubble}, this.props.alertCount)
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("p", {className: "room-time"}, this.props.lastMessage.messageTime), 
+                    React.createElement("div", {className: "room-participants"}, this.props.lastMessage.messageText)
+                )
             )
         );
     }
@@ -362,6 +373,7 @@ var RoomList = React.createClass({displayName: "RoomList",
             return React.createElement(RoomItem, {key: roomData.id, 
                              roomId: roomData.id, 
                              activeId: this.props.activeRoomId, 
+                             alertCount: roomData.alertCount, 
                              roomName: roomData.roomName, 
                              lastMessage: roomData.lastMessage, 
                              switchRoom: this.props.switchRoom}

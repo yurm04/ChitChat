@@ -23,6 +23,10 @@ body {
   flex-flow: column;
 }
 
+.row {
+  display: block;
+}
+
 .header {
   width: 100%;
   display: block;

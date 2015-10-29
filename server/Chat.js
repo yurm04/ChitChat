@@ -18,7 +18,6 @@ module.exports.getChatRooms = function() {
             messages: [{ id: ID(), roomId: 'room2', username: 'some dude', messageText: 'chimichangas probably', messageTime: moment().format('h:mm A') }],
             lastMessage: { id: ID(), roomId: 'room2', username: 'some dude', messageText: 'chimichangas probably', messageTime: moment().format('h:mm A') },
             alertCount: 0
-            
         },
         { id: 'room3', roomName: "TP: over or under?",
             messages: [{ id: ID(), roomId: 'room3', username: 'me', messageText: 'over for sure', messageTime: moment().format('h:mm A') }],

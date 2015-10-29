@@ -4,6 +4,7 @@ var open       = require("gulp-open");
 var browserify = require('gulp-browserify');
 var concat     = require('gulp-concat');
 var sass       = require('gulp-sass');
+var uglify     = require('gulp-uglify');
 var nodemon    = require('gulp-nodemon');
 var livereload = require('gulp-livereload');
 var port       = process.env.port || 3000;
@@ -45,10 +46,10 @@ gulp.task('html', function () {
 
 gulp.task('styles', function() {
   gulp.src('./app/src/sass/styles.scss')
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(gulp.dest('./app/dist/css/'))
     .pipe(livereload());
-})
+});
 
 // watch files for live reload
 gulp.task('watch', function() {

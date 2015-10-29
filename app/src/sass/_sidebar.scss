@@ -49,6 +49,24 @@
 .room-title {
   margin-bottom: .5em;
   font-weight: 400;
+  display: inline-block
+}
+
+.alert-bubble {
+  display: none;
+  float: right;
+  background-color: #f0716a;
+  text-align: center;
+  border-radius: 50%;
+  color: #fafafc;
+  font-weight: 400;
+  width: 20px;
+  height: 20px;
+  font-size: 11px;
+  line-height: 20px;
+  &.show {
+    display: inline-block;
+  }
 }
 
 .room-title, .room-time {
